@@ -1,225 +1,301 @@
-# Train Ticket Reservation System 
-<!-- - Youtube video for local setup of similar project: https://www.youtube.com/watch?v=mLFPodZO8Iw -->
-- Youtube video for Step by Step Guide on Local Setup: https://www.youtube.com/watch?v=Wd2GlEJJJlw
-<!-- - Live Url: https://traintickets.herokuapp.com <br>  -->
-<!-- - Login Credentials: admin/admin -->
+# Train Ticket Reservation System
 
-### About:
-This project is about the Train-Ticket-Reservation-System which is used to view Train Schedule, search trains, Seat availability, Train timings. We can also enquire about fare of different trains. We can get information about train between two stations. We can book seats online. This provides a safe and secure seat reservation system. 
-### Online Train Information and Reservation
-<span style="color:blue">**This Website is built for following purpose:-**</span>
-- View Trains Schedule
-- Search Trains
-- Seat Availability
-- Train Timings
-- Fare Enquiry
-- Trains Between Stations
-- Booking seats online.
-- Login and Logout Security
-- Password Changes
-- Payment Gateway
-- Ticket Booking History
+A Java-based web application for searching trains, checking availability and fares, and managing ticket reservations.
 
-<span style="color:blue">**The Admin have the following access to this website:-**</span>
-- Login
-- Add Trains
-- Update Trains
-- Remove  or cancle Trains
-- View Trains
-- Profile Edit
-- Logout
+**Maintainer:** Manjush Premkumar  
+**Technologies:** Java, Servlets, JDBC, Oracle SQL, HTML, CSS, Bootstrap
 
-<span style="color:blue">**The Users have the following Access:-**</span>
-- Register
-- Login
-- View Trains
-- Check Seat Availability
-- Search Trains
-- Train Avaiablity and Fare Between Stations
-- Books Tickets
-- View Booking History
-- View Profile
-- Update Profile
-- Change Password
-- Logout
+---
 
-### Technologies used:-
-1. Front-End Development:
+## Project Overview
+
+The Train Ticket Reservation System is a web application designed to simplify train information searches and ticket reservation management.
+
+Users can register, log in, search for trains between stations, check fares, book tickets, and view their booking history. Administrators can manage train information through dedicated administrative functionality.
+
+This project is being used to study Java web development, database connectivity, and the architecture of web applications.
+
+## Features
+
+### User Features
+
+- User registration and login
+- View available trains
+- Search for trains between stations
+- Check train availability
+- View train schedules and fares
+- Book train tickets
+- View booking details
+- Access booking history
+- View and update profile information
+- Change password
+- Log out
+
+### Administrator Features
+
+- Administrator login
+- Add new trains
+- View available trains
+- Update train information
+- Remove or cancel trains
+- Manage profile information
+- Log out
+
+### Additional Features
+
+The original project also advertises payment processing and ticket booking history. Refer to the implementation to verify the functionality of each feature.
+
+---
+
+## Technology Stack
+
+### Frontend
 - HTML
 - CSS
 - Bootstrap
 
-2. Back-End Development
-- Java [J2EE]
+### Backend
+- Java (J2EE / Java EE)
+- Java Servlets
 - JDBC
-- Servlet
-- Oracle ( SQL )
 
-### ==== Software And Tools Required ======
-- : Git [https://www.youtube.com/watch?v=gv7VPQ4LZ7g]
-- : Java JDK 8+ [https://www.youtube.com/watch?v=O9PWH9SeTTE]
-- : Eclipse EE [https://www.youtube.com/watch?v=8aDsEV7txXE]
-- : Apache Maven [https://www.youtube.com/watch?v=jd2zx3dLjuw]
-- : Tomcat v8.0+ [https://youtu.be/mLFPodZO8Iw?t=903]
-- : Oracle (SQL) / SQL PLUS [https://www.youtube.com/watch?v=ZYOqykEDSqU]
-- : Oracle SQL Developer [https://www.youtube.com/watch?v=2a1JKIGVtd0]
+### Database
+- Oracle SQL
 
-### ========== Dummy Database Initialization ===========
+### Development Tools
+- Git
+- Java Development Kit (JDK)
+- Eclipse IDE for Enterprise Java and Web Developers
+- Apache Maven
+- Apache Tomcat
+- Oracle SQL Developer or SQL*Plus
 
-STEP 1: Open SQL Plus OR SQL Developer
+> Note: This project uses Java Servlets and JDBC. It does not use Spring Boot.
 
-STEP 2: Login and connect to database using administrator username and password
+---
 
-STEP 3 :Execute the below command first to create a new user:
+## Application Architecture
 
-```SQL
+The application follows a traditional Java web application architecture.
 
-ALTER SESSION SET "_ORACLE_SCRIPT"=TRUE;  
-CREATE USER RESERVATION IDENTIFIED BY MANAGER;
-GRANT DBA TO RESERVATION;
-COMMIT;
-
+```text
+User
+  |
+  v
+Frontend (HTML, CSS, Bootstrap)
+  |
+  v
+Java Servlets
+  |
+  v
+Application Logic
+  |
+  v
+JDBC
+  |
+  v
+Oracle Database
 ```
-NOTE: If the above command fails for alter session issues, try to remove first line and then execute it.
 
-STEP 4: Now execute the below sql query in same terminal
+The frontend provides the user interface. Java Servlets handle web requests, application logic processes operations, and JDBC enables communication with the Oracle database.
 
-```SQL
+---
 
-CONNECT RESERVATION/MANAGER;
-CREATE TABLE "RESERVATION"."CUSTOMER" 
-(	
-"MAILID" VARCHAR2(40) PRIMARY KEY, 
-"PWORD" VARCHAR2(20) NOT NULL, 
-"FNAME" VARCHAR2(20) NOT NULL, 
-"LNAME" VARCHAR2(20), 
-"ADDR" VARCHAR2(100), 
-"PHNO" NUMBER(12) NOT NULL
-);
+## Database Structure
 
-CREATE TABLE "RESERVATION"."ADMIN"
-(	
-"MAILID" VARCHAR2(40) PRIMARY KEY, 
-"PWORD" VARCHAR2(20) NOT NULL, 
-"FNAME" VARCHAR2(20) NOT NULL, 
-"LNAME" VARCHAR2(20), 
-"ADDR" VARCHAR2(100), 
-"PHNO" NUMBER(12) NOT NULL
-);
+The database setup described in the original project contains four tables.
 
+| Table | Purpose |
+|---|---|
+| `CUSTOMER` | Stores customer information |
+| `ADMIN` | Stores administrator information |
+| `TRAIN` | Stores train details, routes, available seats, and fares |
+| `HISTORY` | Stores ticket booking information |
 
-CREATE TABLE "RESERVATION"."TRAIN" 
-(	
-"TR_NO" NUMBER(10) PRIMARY KEY, 
-"TR_NAME" VARCHAR2(70) NOT NULL, 
-"FROM_STN" VARCHAR2(20) NOT NULL, 
-"TO_STN" VARCHAR2(20) NOT NULL, 
-"SEATS" NUMBER(4) NOT NULL, 
-"FARE" NUMBER(6,2) NOT NULL 
-);
+The `HISTORY` table includes booking identifiers, customer references, train numbers, travel dates, source and destination stations, seat counts, and booking amounts.
 
-CREATE TABLE "RESERVATION"."HISTORY" 
-(	
-"TRANSID" VARCHAR2(36) PRIMARY KEY, 
-"MAILID" VARCHAR2(40) REFERENCES "RESERVATION"."CUSTOMER"(MAILID), 
-"TR_NO" NUMBER(10),
-"DATE" DATE,
-"FROM_STN" VARCHAR2(20) NOT NULL, 
-"TO_STN" VARCHAR2(20) NOT NULL, 
-"SEATS" NUMBER(3) NOT NULL, 
-"AMOUNT" NUMBER(8,2) NOT NULL
-);
+### Database Setup
 
-COMMIT;
+The original setup instructions use Oracle SQL*Plus or Oracle SQL Developer.
 
-INSERT INTO RESERVATION.ADMIN VALUES('admin@demo.com','admin','System','Admin','Demo Address 123 colony','9874561230');
-INSERT INTO RESERVATION.CUSTOMER VALUES('shashi@demo.com','shashi','Shashi','Raj','Kolkata, West Bengal',954745222);
+**Important:** The SQL below is adapted from the original project. Use a local development database and avoid granting unnecessary administrative privileges to application accounts.
 
-INSERT INTO RESERVATION.TRAIN VALUES(10001,'JODHPUR EXP','HOWRAH','JODHPUR', 152, 490.50);
-INSERT INTO RESERVATION.TRAIN VALUES(10002,'YAMUNA EXP','GAYA','DELHI', 52, 550.50);
-INSERT INTO RESERVATION.TRAIN VALUES(10003,'NILANCHAL EXP','GAYA','HOWRAH', 92, 451);
-INSERT INTO RESERVATION.TRAIN VALUES(10004,'JAN SATABDI EXP','RANCHI','PATNA', 182, 550);
-INSERT INTO RESERVATION.TRAIN VALUES(10005,'GANGE EXP','MUMBAI','KERALA', 12, 945);
-INSERT INTO RESERVATION.TRAIN VALUES(10006,'GARIB RATH EXP','PATNA','DELHI', 1, 1450.75);
+#### Step 1: Create the database user
 
-INSERT INTO RESERVATION.HISTORY VALUES('BBC374-NSDF-4673','shashi@demo.com',10001,TO_DATE('02-FEB-2024'), 'HOWRAH', 'JODHPUR', 2, 981);
-INSERT INTO RESERVATION.HISTORY VALUES('BBC375-NSDF-4675','shashi@demo.com',10004,TO_DATE('12-JAN-2024'), 'RANCHI', 'PATNA', 1, 550);
-INSERT INTO RESERVATION.HISTORY VALUES('BBC373-NSDF-4674','shashi@demo.com',10006,TO_DATE('22-JULY-2024'), 'PATNA', 'DELHI', 3, 4352.25);
+Connect to Oracle using an account authorized to create users.
 
-COMMIT;
+```sql
+CREATE USER RESERVATION IDENTIFIED BY "ChooseYourOwnPassword";
+GRANT CREATE SESSION, CREATE TABLE TO RESERVATION;
 ```
-STEP 5: Now Execute the below query one by one to check if the tables are created successfully
-```SQL
-SELECT * FROM ADMIN;
+
+Depending on your Oracle version and configuration, additional privileges may be required.
+
+#### Step 2: Connect as the reservation user
+
+```sql
+CONNECT RESERVATION/"ChooseYourOwnPassword";
+```
+
+#### Step 3: Create the tables
+
+```sql
+CREATE TABLE CUSTOMER (
+    MAILID VARCHAR2(40) PRIMARY KEY,
+    PWORD VARCHAR2(20) NOT NULL,
+    FNAME VARCHAR2(20) NOT NULL,
+    LNAME VARCHAR2(20),
+    ADDR VARCHAR2(100),
+    PHNO NUMBER(12) NOT NULL
+);
+
+CREATE TABLE ADMIN (
+    MAILID VARCHAR2(40) PRIMARY KEY,
+    PWORD VARCHAR2(20) NOT NULL,
+    FNAME VARCHAR2(20) NOT NULL,
+    LNAME VARCHAR2(20),
+    ADDR VARCHAR2(100),
+    PHNO NUMBER(12) NOT NULL
+);
+
+CREATE TABLE TRAIN (
+    TR_NO NUMBER(10) PRIMARY KEY,
+    TR_NAME VARCHAR2(70) NOT NULL,
+    FROM_STN VARCHAR2(20) NOT NULL,
+    TO_STN VARCHAR2(20) NOT NULL,
+    SEATS NUMBER(4) NOT NULL,
+    FARE NUMBER(6,2) NOT NULL
+);
+
+CREATE TABLE HISTORY (
+    TRANSID VARCHAR2(36) PRIMARY KEY,
+    MAILID VARCHAR2(40)
+        REFERENCES CUSTOMER(MAILID),
+    TR_NO NUMBER(10),
+    "DATE" DATE,
+    FROM_STN VARCHAR2(20) NOT NULL,
+    TO_STN VARCHAR2(20) NOT NULL,
+    SEATS NUMBER(3) NOT NULL,
+    AMOUNT NUMBER(8,2) NOT NULL
+);
+```
+
+> **Security note:** The schema above reflects the original project's design. Before using the application beyond local learning, review its password-storage implementation and replace plaintext password storage with a secure password-hashing approach.
+
+#### Step 4: Verify the tables
+
+```sql
 SELECT * FROM CUSTOMER;
+SELECT * FROM ADMIN;
 SELECT * FROM TRAIN;
 SELECT * FROM HISTORY;
-
 ```
-Note: If any of the above commands fails, please try to fix it first and then proceed to next step
-	
-### ====== Importing and Running the Project Through Eclipse EE ===========
-Step 0: Open Eclipse Enterprise Edition. [Install if not available](https://www.youtube.com/watch?v=8aDsEV7txXE)
 
-Step 1: Click On File > Import > Git > Projects From Git > Clone Uri  > Paste The Repository Url: ```https://github.com/shashirajraja/Train-Ticket-Reservation-System.git``` > Next > Select Master Branch > Next > Finish
+The original repository includes sample data in its database setup instructions. Consult the original README if you need those specific sample records.
 
-Step 2.A: Right Click on Project > Run as > Maven Build > In the goals field enter "clean install" > apply > run
+---
 
-Step 2.B: Right Click On Project > Build Path > Configure Build Path > Libraries > Remove And Update Any Libraries With Red Mark > Finish
+## Installation and Setup
 
-Step 3: [Only if Tomcat v8.0 is not Configured in Eclipse]: Right Click On Project > Run As > Run On Server > Select Tomcat v8.0 > (Select Tomcat V8.0 Installation Location If Asked) Next > Add <project-name> > Finish
+The original project documentation describes running the application through Eclipse and Apache Tomcat.
 
-Step 4: In The Server Tab > Double Click On Tomcat Server > Ports  > Change The Port Number For Http/1.1 To 8083 > Close And Save
+### Prerequisites
 
-Step 5: Right Click On Project > Run As > Run On Server > Select Tomcat V8.0 > Next > Add All> Done
+Install the following software as required by the project:
 
-Step 6: Check Running The Site At  <a Href="Http://localhost:8083/trainbook/">http://localhost:8083/trainbook/</a>
+- Git
+- A compatible JDK
+- Eclipse IDE for Enterprise Java and Web Developers
+- Apache Maven
+- A compatible Apache Tomcat version
+- Oracle Database
+- Oracle SQL Developer or SQL*Plus
 
-Step 7: Default Username And Password For Admin Is "admin@demo.com" And "admin"
+The original setup guide targets an older Java web application environment. Compatibility adjustments may be necessary with newer Java and Tomcat versions.
 
-Step 8: Default Username And Password For User Is "shashi@demo.com" And "shashi"
+### Step 1: Clone the repository
 
+```bash
+git clone https://github.com/manjush007/-Train-Ticket-Reservation-System.git
+```
 
+### Step 2: Enter the project directory
 
-### The Screenshots of some of the  webPages of this project are Here:
+```bash
+cd -Train-Ticket-Reservation-System
+```
 
-1. Login Page
-<img width="100%" alt="Login to Book Trains" src="https://user-images.githubusercontent.com/34605595/232219369-85b55a1d-6640-4821-941a-dcca08036fbe.png">
+If the directory name on your computer differs, use the actual directory name.
 
-2. Register New User
-<img width="100%" alt="Register New User" src="https://user-images.githubusercontent.com/34605595/232219485-2b00949a-be20-44f7-b6c1-107213221f94.png">
+### Step 3: Build with Maven
 
-3. User Profile
-<img width="100%" alt="View User Profile" src="https://user-images.githubusercontent.com/34605595/232219729-2720e50f-e14b-4253-831a-85c59e3054b3.png">
+```bash
+mvn clean install
+```
 
-4. Search Trains Between Stations
-<img width="100%" alt="Search Trains Between Stations" src="https://user-images.githubusercontent.com/34605595/232220357-54b634d6-afae-427c-b3af-57b372b70906.png">
+Resolve any dependency or compatibility errors before continuing.
 
-5. View Trains
-<img width="100%" alt="View Available Trains" src="https://user-images.githubusercontent.com/34605595/232219905-983eeefe-977b-40ad-a695-4ec577272dcc.png">
+### Step 4: Configure the database
 
-7. Book Trains
-<img width="100%" alt="Book Trains Project" src="https://user-images.githubusercontent.com/34605595/232220107-415b251f-90b9-4e70-aff8-e94d370927f6.png">
+Create the Oracle database tables and configure the application's database connection settings according to the source code.
 
-8. Payment Gateway
-<img width="100%" alt="Pay to Book Trains" src="https://user-images.githubusercontent.com/34605595/232220744-351c2c6d-e1f6-49ad-a11b-7680aa63dbe3.png">
+Do not commit real database credentials to GitHub.
 
-9. Booked Ticket Information
-<img width="100%" alt="Show Booked Ticket Details" src="https://user-images.githubusercontent.com/34605595/232220935-654bda38-cbde-4203-84b8-3078a32ac6ec.png">
+### Step 5: Configure Tomcat
 
-10. Ticket Booking History
-<img width="100%" alt="All Ticket Booking History" src="https://user-images.githubusercontent.com/34605595/232220491-3e7996cb-a54c-4375-a35a-6ab1d211a001.png">
+Import the project into Eclipse as an existing Maven project. Configure a compatible Tomcat server and deploy the web application.
 
-11. Fare Enquiry
-<img alt="Fare Enquiry between stations" src="https://github.com/shashirajraja/Train-Ticket-Reservation-System/blob/master/Screenshots/fareenquiry.png" width="100%">
+The original documentation uses port `8083` and the context path `/trainbook/`.
 
-12. Change Password
-<img alt="Change user Password" src="https://github.com/shashirajraja/Train-Ticket-Reservation-System/blob/master/Screenshots/passwordchange.png" width="100%">
+If your local configuration matches those settings, the application may be accessible at:
 
-13. Add Trains By Admin
-<img alt="Admin Home" src="https://github.com/shashirajraja/Train-Ticket-Reservation-System/blob/master/Screenshots/addtrains.png" width="100%">
+```text
+http://localhost:8083/trainbook/
+```
 
+This address works only when the application has been configured and started successfully.
 
-#### "Suggestions and project Improvement are Invited"
-#### Shashi Raj
-##### Project Leader
+---
+
+## Screenshots
+
+The original project includes screenshots of several application pages, including:
+
+- Login page
+- User registration
+- User profile
+- Train search
+- Available trains
+- Ticket booking
+- Booking details
+- Booking history
+- Fare enquiry
+- Password changes
+- Administrator train management
+
+Refer to the original repository's `Screenshots` directory for the available images.
+
+---
+
+## Learning Objectives
+
+This repository is being used to explore the following concepts:
+
+- Core Java and object-oriented programming
+- Java Servlets and HTTP request handling
+- JDBC and relational database connectivity
+- SQL queries and database relationships
+- CRUD operations
+- Traditional Java web application architecture
+- Maven-based project builds
+- Git and GitHub workflows
+
+The goal is to build a deeper understanding of how Java web applications are structured and how their components interact.
+
+---
+
+## Maintainer
+
+**Manjush Premkumar**
+
+This repository is maintained for learning, experimentation, and documenting improvements to Java web application development.
